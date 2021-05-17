@@ -1,0 +1,88 @@
+﻿<Window x:Class="_2C.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_2C" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions" xmlns:controls="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        mc:Ignorable="d"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Grid>
+
+        <Grid Height="60" VerticalAlignment="Top" Background="#FF9C27B0" MouseDown="Grid_MouseDown">
+            <TextBlock Text="Library Management" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="Arial Black"/>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2" >
+                <materialDesign:PackIcon Kind="Power" Height="24" Width="24"/>
+
+            </Button>
+        </Grid>
+        <Grid Margin="0 60 0 0">
+            <TabControl Style="{StaticResource MaterialDesignAppBarTabControl}">
+                <TabItem Header="КНИГИ">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:UniformGrid Grid.Column="0" Margin="10" Rows="5" HorizontalAlignment="Stretch" VerticalAlignment="top"   >
+                            <TextBox x:Name="Title" materialDesign:HintAssist.Hint="Название"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="Barcode" materialDesign:HintAssist.Hint="Штрихкод"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="ExtraInfo" materialDesign:HintAssist.Hint="Дополнительная информация"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                        </controls:UniformGrid>
+
+                        <controls:UniformGrid Margin="10" Rows="1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+
+                            <Button Grid.Column="0" Content="Добавить" FontSize="20" Margin="5" Padding="6,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click_1" />
+                            <Button Grid.Column="1" Content="Изменить" FontSize="20" Margin="5" Padding="6,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click_4"/>
+                            <Button Grid.Column="2" Content="Удалить" FontSize="20" Margin="5" Padding="6,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click_3"/>
+                        </controls:UniformGrid>
+
+
+
+                        <DataGrid x:Name="dataGrid1" IsReadOnly="True" Margin="10" Grid.Column="1" SelectedCellsChanged="dataGrid1_SelectedCellsChanged" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="СТУДЕНТЫ">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:UniformGrid Grid.Column="0" Margin="10" Rows="5" HorizontalAlignment="Stretch" VerticalAlignment="top"   >
+                            <TextBox x:Name="Name" materialDesign:HintAssist.Hint="Имя"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="Number" materialDesign:HintAssist.Hint="Номер телефона"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="Group" materialDesign:HintAssist.Hint="Уникальный идентификатор"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="Addres" materialDesign:HintAssist.Hint="Адрес"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                            <TextBox x:Name="Extranfo" materialDesign:HintAssist.Hint="Дополнительная информация"  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+
+
+                        </controls:UniformGrid>
+
+                        <DataGrid Margin="10" x:Name="dataGrid2" Grid.Column="1"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="ТЕСТ">
+                    <Grid>
+                        <Button Margin="494,426,462,34" HorizontalAlignment="Center" Width="124" Content="Заполнить" Click="Button_Click_5"/>
+                        <DataGrid  x:Name="dataGrid3" Grid.Column="1" Height="400" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem>
+
+            </TabControl>
+
+        </Grid>
+
+
+
+    </Grid>
+
+</Window>
