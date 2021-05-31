@@ -20,11 +20,15 @@
             <TextBlock Text="Library Management" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="Arial Black"/>
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2" >
                 <materialDesign:PackIcon Kind="Power" Height="24" Width="24"/>
-
             </Button>
         </Grid>
+        
         <Grid Margin="0 60 0 0">
-            <TabControl Style="{StaticResource MaterialDesignAppBarTabControl}">
+
+           
+            
+            <TabControl x:Name="tabControl1" Style="{StaticResource MaterialDesignAppBarTabControl}" SelectionChanged="TabControl_SelectionChanged">
+                
                 <TabItem Header="КНИГИ">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -45,9 +49,7 @@
                             <Button Grid.Column="2" Content="Удалить" FontSize="20" Margin="5" Padding="6,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click_3"/>
                         </controls:UniformGrid>
 
-
-
-                        <DataGrid x:Name="dataGrid1" IsReadOnly="True" Margin="10" Grid.Column="1" SelectedCellsChanged="dataGrid1_SelectedCellsChanged" />
+                        <DataGrid Margin="10"  x:Name="dataGrid1" Grid.Column="1"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="СТУДЕНТЫ">
@@ -75,6 +77,8 @@
                         <Button Margin="494,426,462,34" HorizontalAlignment="Center" Width="124" Content="Заполнить" Click="Button_Click_5"/>
                         <DataGrid  x:Name="dataGrid3" Grid.Column="1" Height="400" VerticalAlignment="Top"/>
                     </Grid>
+                </TabItem>
+                <TabItem Header="+" >
                 </TabItem>
 
             </TabControl>

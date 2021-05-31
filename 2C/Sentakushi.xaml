@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="_2C.Sentakushi"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:_2C"
+             xmlns:local="clr-namespace:_2C"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="Grid1">
+        <StackPanel VerticalAlignment="Center" Width="500px">
+            
+            <Button x:Name="NewTable" Content="Новая таблица" Margin="10"/>
+            <Button x:Name="OpenTable" Content="Существующая таблица" Margin="10" Click="OpenTable_Click"/>
+            <Button Content="Пока не придумал" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

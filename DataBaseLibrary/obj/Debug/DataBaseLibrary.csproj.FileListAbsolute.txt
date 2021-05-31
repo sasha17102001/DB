@@ -16,3 +16,9 @@ X:\торренты\2C\DataBaseLibrary\obj\Debug\DataBaseLibrary.csprojAssemblyR
 X:\торренты\2C\DataBaseLibrary\obj\Debug\DataBaseLibrary.csproj.CoreCompileInputs.cache
 X:\торренты\2C\DataBaseLibrary\obj\Debug\DataBaseLibrary.dll
 X:\торренты\2C\DataBaseLibrary\obj\Debug\DataBaseLibrary.pdb
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\bin\Debug\DataBaseLibrary.dll
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\bin\Debug\DataBaseLibrary.pdb
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\obj\Debug\DataBaseLibrary.csprojAssemblyReference.cache
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\obj\Debug\DataBaseLibrary.csproj.CoreCompileInputs.cache
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\obj\Debug\DataBaseLibrary.dll
+C:\Users\sasha\Desktop\DB-main\DataBaseLibrary\obj\Debug\DataBaseLibrary.pdb

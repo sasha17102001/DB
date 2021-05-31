@@ -28,13 +28,17 @@ namespace _2C
        
         public MainWindow()
         {
+          
             InitializeComponent();
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
             string connectionString= @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+strWorkPath+ @"\Database1.mdf;Integrated Security=True";
             DBLibrary.Connection.SetConnection(connectionString);
             dataGrid1.ItemsSource = DBLibrary.DB.GetData("select * from Books").DefaultView;
-            
+
+   
+
+
         }
         
         SqlConnection myConnection = new SqlConnection();
@@ -104,5 +108,96 @@ namespace _2C
             DBLibrary.SPFunc.DGFill("Books",dataGrid3) ;
 
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
+            TabItem Ti = ((sender as TabControl).SelectedItem as TabItem);
+            switch (tabItem)
+            {
+                case "+":
+                    Sentakushi sentakushi = new Sentakushi();
+                    sentakushi.OpenTable.Click += new RoutedEventHandler(OpenNewTable); 
+                    TabItem ti = new TabItem();
+                    ti.Header = "+";
+                    Ti.Header = "Новая вкладка";
+                    tabControl1.Items.Insert(tabControl1.Items.Count, ti);
+                    Button bt = new Button();
+                    bt.Content = "Button Text";
+                    Ti.Content = sentakushi;
+                    
+                    break;
+
+                default:
+                    return;
+            }
+        }
+
+        private void OpenNewTable(object sender, RoutedEventArgs e)
+        {
+            ComboBox comboBox = new ComboBox();
+            OpenTable openTable = new OpenTable();
+            
+            comboBox.Width = 200;
+            Grid grid = new Grid();
+            Button button = new Button();
+            button.Width = 100;
+            button.Content = "ок";
+            button.Margin = new Thickness(10);
+            button.Click+= new RoutedEventHandler((sendItem, args) => {
+                if (comboBox.SelectedItem == null)
+                {
+                    MessageBox.Show("Выберите таблицу");
+                    return;
+                }
+                else
+                {
+                    DBLibrary.SPFunc.DGFill(comboBox.Text,openTable.dataGrid1);
+                    for (int i = 0; i < DBLibrary.DB.getNumberOfCulumns(comboBox.Text); i++)
+                    {
+                        TextBox textBox = new TextBox();
+                        MaterialDesignThemes.Wpf.HintAssist.SetHint(textBox, DB.getColumnsName(comboBox.Text)[i]);
+                        //textBox.Style = Resources["StaticResource MaterialDesignFloatingHintTextBox"] as Style;
+                        
+                            openTable.stackPanel1.Children.Add(textBox);
+                        
+                    }
+                    openTable.dataGrid1.SelectedCellsChanged += new SelectedCellsChangedEventHandler((sendItem0, args0) => 
+                    {
+                        if (openTable.dataGrid1.SelectedItem != null)
+                        {
+                            for (int i = 0; i < DBLibrary.DB.getNumberOfCulumns(comboBox.Text); i++)
+                            {
+                                if (openTable.stackPanel1.Children[i].GetType() == typeof(TextBox)) {
+                                    (openTable.stackPanel1.Children[i] as TextBox).Text = (openTable.dataGrid1.SelectedCells[i].Column.GetCellContent(openTable.dataGrid1.SelectedCells[i].Item) as TextBlock).Text.ToString();
+                                }
+                            }
+                            
+                           
+
+                        }   
+                    });
+
+                    openTable.Add.Click += new RoutedEventHandler((sendItem2, args3) => { });
+
+                        (tabControl1.SelectedItem as TabItem).Content = openTable;
+                   
+                }
+                
+            
+            
+            
+            
+            });
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Children.Add(comboBox);
+            stackPanel.Children.Add(button);
+            stackPanel.VerticalAlignment = VerticalAlignment.Center;
+            grid.Children.Add(stackPanel);
+            DBLibrary.SPFunc.ComboFill(comboBox);
+            (tabControl1.SelectedItem as TabItem).Content = grid;
+        }
+
+        
     }
 }

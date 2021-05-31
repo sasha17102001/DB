@@ -78,7 +78,7 @@ namespace DBLibrary
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = "update "+TableName+ "set "+cmdStr+" where BookId=" + ID;
+                cmd.CommandText = "update "+TableName+ "set "+cmdStr+" where &Identity=" + ID;
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -107,16 +107,174 @@ namespace DBLibrary
                 MessageBox.Show(ex.Message);
             }
         }
-
-        public void TableCreate()
+        //получить количество записей таблицы указанной в качестве аргумента
+        public static int getCountOfRecords(string TableName)
         {
-            throw new System.NotImplementedException();
+            int count = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT COUNT(*) FROM "+TableName;
+                count = (int)cmd.ExecuteScalar();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return count;
+        }
+        //получить количество записей таблицы указанной в качестве аргумента
+        public static int getNumberOfCulumns(string TableName)
+        {
+            int count = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.Columns where TABLE_NAME='" + TableName+"'"; 
+                count = (int)cmd.ExecuteScalar();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return count;
+        }
+        //получить имена полей таблицы указанной в качестве аргумента, в виде массива
+        public static string[] getColumnsName(string TableName)
+        {
+            List<string> listacolumnas = new List<string>();
+            using (SqlConnection con = new SqlConnection(Connection.GetConnection()))
+            using (SqlCommand cmd = con.CreateCommand())
+            {
+                cmd.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '"+TableName+"' and t.type = 'U'";
+                con.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listacolumnas.Add(reader.GetString(0));
+                    }
+                }
+            }
+            return listacolumnas.ToArray();
+        }
+        //получить тип поля таблицы указанной в качестве аргумента, в виде массива
+        public static Type getColumnType(string TableName,int c)
+        {
+           
+            Type type = null;
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT * FROM ["+TableName+"]";
+                SqlDataReader rdr = cmd.ExecuteReader();
+                type = rdr.GetFieldType(c);
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return type;
+        }
+        //добавить поле в таблицу
+        public static void AddColumn(string TableName, string ColumnName, string DataType)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "ALTER TABLE "+ TableName+" ADD "+ColumnName+" "+DataType ;
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        //удалить поле из таблицы
+        public static void DeleteColumn(string TableName, string ColumnName)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "ALTER TABLE " + TableName + " DROP COLUMN " + ColumnName;
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        //изменить тип данных поля
+        public static void ModifyColumn(string TableName, string ColumnName, string DataType)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "ALTER TABLE " + TableName + " ADD " + ColumnName + " " + DataType;
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+        public void TableCreate(string TableName, string ColumnName_DataType)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.GetConnection());
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "CREATE TABLE "+TableName+ "("+ ColumnName_DataType + ")";
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
+
+
     public class SPFunc
     {
 
-        //загрузить в датагрид таблицу 
+        //загрузить в datagrid таблицу 
         public static void DGFill(string TableName, DataGrid dataGrid1)
         {
             try
@@ -137,7 +295,7 @@ namespace DBLibrary
                 MessageBox.Show(ex.Message);
             }
         }
-        //загрузить в комбобокс названия таблиц (доработать)
+        //загрузить в combobox названия таблиц 
         public static void ComboFill(ComboBox ComboBox1)
         {
  
